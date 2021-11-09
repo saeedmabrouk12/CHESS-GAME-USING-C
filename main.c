@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 #include<conio.h>
-#define length 8
+#define LENGTH 8
 //save all moves to undo , save the old place for moved piece and the new one
 //3 bools to check theres kil or promote or housing in the move
 struct allmoves{
@@ -12,12 +12,12 @@ struct allmoves{
     bool ifpromote;
     bool ifhousing;
 };
-struct allmoves movements[120];
+struct allmoves movements[277];
 //player tell who should play if even black if odd white it increase every play
 int player=0;
 // to make sure no one moved to make a good housing
 bool housing[2][3]={true,true,true,true,true,true};
-char chessboard[length][length],killed[30];
+char chessboard[LENGTH][LENGTH],killed[30];
 // using pointer because some time we need to return killed piece to play
 char *numofkilled=killed;
 // fun to full chessboard array with  peices  and replace white places with '.' and black with '-' and print white team
@@ -46,14 +46,14 @@ int main(void){
     printchessboard();
 }
 void fullchess(){
-    for (int i=0;i<length;i++){
-            for (int j=0;j<length;j++){
+    for (int i=0;i<LENGTH;i++){
+            for (int j=0;j<LENGTH;j++){
                 if ((i-j)%2==0) chessboard[i][j]='.';
                 else chessboard[i][j]='-';
             }
     }
-    for (int j=0;j<length;j++) chessboard[1][j]='p';
-    for (int j=0;j<length;j++) chessboard[6][j]='P';
+    for (int j=0;j<LENGTH;j++) chessboard[1][j]='p';
+    for (int j=0;j<LENGTH;j++) chessboard[6][j]='P';
     chessboard[0][0]=chessboard[0][7]='r';
     chessboard[7][0]=chessboard[7][7]='R';
     chessboard[0][1]=chessboard[0][6]='n';
@@ -69,17 +69,17 @@ void fullchess(){
 void printchessboard (){
     system("cls");
     printf(".................................\n..............CHESS..............\n.................................\n");
-    for (int i=0;i<length;i++) printf("   %c",'a'+i);
+    for (int i=0;i<LENGTH;i++) printf("   %c",'a'+i);
     printf("\n");
-    for (int i=0;i<length;i++){
+    for (int i=0;i<LENGTH;i++){
         printf(" %d",abs(8-i));
-        for (int j=0;j<length;j++){
+        for (int j=0;j<LENGTH;j++){
             printf("[%c] ",chessboard[i][j]);
         }
         printf("\n");
     }
     printf(" KILLED : ");
-    for (int i=0;killed[i]!=*numofkilled;i++)   printf("%c",killed[i]);
+    for (int i=0;&killed[i]!=numofkilled;i++)   printf("%c",killed[i]);
     printf("\n");
     printf("Make sure u don't open caps lock\n");
     printf("For undo click u for redo click r for play click n\n");
@@ -302,8 +302,7 @@ void movewithoutkill (int a,int b,int c,int d){
     promotion (c,d);
     checkhousing(a,b,c,d);
 }
-void movewithkill (int a,int b,int c,int d)
-{
+void movewithkill (int a,int b,int c,int d){
      if (chessboard[a][b]=='p'&&c==7)               movements[player].ifpromote=true;
     else if  (chessboard[a][b]=='P'&&c==0)          movements[player].ifpromote=true;
     else                                            movements[player].ifpromote=false;
@@ -325,12 +324,12 @@ bool isempty (int c, int d){
     return false;
 }
 void checkhousing (int a,int b,int c,int d){
-    if (chessboard[c][d]=='r'&&b==0)            housing[0][0]=true;
+    if (chessboard[c][d]=='r'&&b==0)                housing[0][0]=true;
     else if (chessboard[c][d]=='k')                 housing[0][1]=true;
-    else if (chessboard[c][d]=='r'&&b==7)      housing[0][2]=true;
-    else if (chessboard[c][d]=='R'&&b==0)     housing[1][0]=true;
+    else if (chessboard[c][d]=='r'&&b==7)           housing[0][2]=true;
+    else if (chessboard[c][d]=='R'&&b==0)           housing[1][0]=true;
     else if (chessboard[c][d]=='K')                 housing[1][1]=true;
-    else if (chessboard[c][d]=='R'&&b==7)     housing[1][2]=true;
+    else if (chessboard[c][d]=='R'&&b==7)           housing[1][2]=true;
 }
 void promotion (int c , int d){
     if (chessboard[c][d]=='p'&&c==7){

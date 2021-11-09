@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1636499180 source:s:\c\new folder\main\chess\chess-game-using-c\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<ctype.h>
+	<conio.h>
+
